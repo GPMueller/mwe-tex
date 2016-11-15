@@ -1,0 +1,139 @@
+	\documentclass{report}
+	\usepackage[T1]{fontenc}
+	\usepackage[utf8]{inputenc}
+	\usepackage[english]{babel}
+	
+	\usepackage[dvipsnames]{xcolor}
+	
+	\usepackage{tikz,pgfplots,pgfplotstable}
+	\pgfplotsset{compat=newest}
+	
+	%===================================================
+	\usetikzlibrary{positioning,plotmarks,external}
+	\tikzexternalize[mode=convert with system call,shell escape=-enable-write18]
+	%===================================================
+	
+	
+	%==== Line Colors CMYK ==============================
+	%\definecolor{color1}{cmyk}{0.784,0.506,0,0}      % Blue
+	\colorlet{color1}{RoyalBlue}
+	\definecolor{color2}{cmyk}{0,0.886,0.877,0.106}  % Red
+	\definecolor{color3}{cmyk}{0,0.502,1,0}          % Orange
+	\definecolor{color4}{cmyk}{0.56,0,0.577,0.314}   % Green
+	%\definecolor{color5}{cmyk}{0.0675,0.521,0,0.361} % Purple
+	\definecolor{color5}{cmyk}{0.62,0.79,0,0} % Purple
+	\definecolor{color6}{cmyk}{0,0,0.8,0}            % Yellow
+	\definecolor{color01}{cmyk}{0,0,0,0}             % White
+	\definecolor{color02}{cmyk}{0,0,0,1}             % Black
+	\definecolor{color03}{cmyk}{0,0,0,0.55}          % Gray
+	%\definecolor{pureblue}{cmyk}{1,1,0,0}
+	%\definecolor{puregreen}{cmyk}{1,0,1,0}
+	%\definecolor{purered}{cmyk}{0,1,1,0}
+	%===================================================
+	
+	
+	
+	\begin{document}
+	
+	\begin{tikzpicture}
+		
+		%==== Plot Sizes
+		\newcommand{\plotwidth}{0.7*\linewidth}
+		\newcommand{\plotheight}{3.0/5.0*\plotwidth}
+		
+		
+		%==== Data: Tables
+		\pgfplotstableread{Data/Subdiv1.txt}\datatableOne
+		\pgfplotstableread{Data/Subdiv2.txt}\datatableTwo
+		\pgfplotstableread{Data/Subdiv3.txt}\datatableThree
+		\pgfplotstableread{Data/Subdiv4.txt}\datatableFour
+		\pgfplotstableread{Data/controlMesh.txt}\datatableControl
+		
+		
+		%%%% Top left
+		\begin{axis}
+		[
+			scale only axis,
+			hide axis,
+%			every axis plot/.style={very thin},
+			width=\plotwidth*0.5,
+			height=\plotheight*0.5,
+			at={(0,0)}
+		]
+			%=== Control Mesh
+			\addplot[very thick,dashed,color=Gray] table {\datatableControl};
+			%=== Subdivision
+			\addplot[very thick,color=Black] table {\datatableOne};
+			
+		\end{axis}
+		
+		
+		%%%% Top right
+		\begin{axis}
+		[
+			scale only axis,
+			hide axis,
+%			every axis plot/.style={very thin},
+			width=\plotwidth*0.5,
+			height=\plotheight*0.5,
+			at={(0.5*\plotwidth,0)}
+		]
+			%=== Control Mesh
+			\addplot[very thick,dashed,color=Gray] table {\datatableControl};
+			%=== Previous Subdivision
+			\addplot[very thick,color=color1] table {\datatableOne};
+			%=== Subdivision
+			\addplot[very thick,color=Black] table {\datatableTwo};
+			
+		\end{axis}
+		
+		
+		%%%% bottom left
+		\begin{axis}
+		[
+			scale only axis,
+			hide axis,
+%			every axis plot/.style={very thin},
+			width=\plotwidth*0.5,
+			height=\plotheight*0.5,
+			at={(0,-0.4*\plotheight)}
+		]
+			%=== Control Mesh
+			\addplot[very thick,dashed,color=Gray] table {\datatableControl};
+			%=== Previous Subdivision
+			\addplot[very thick,color=color1!50!White] table {\datatableOne};
+			%=== Previous Subdivision
+			\addplot[very thick,color=color1] table {\datatableTwo};
+			%=== Subdivision
+			\addplot[very thick,color=Black] table {\datatableThree};
+			
+		\end{axis}
+		
+		
+		%%%% bottom right
+		\begin{axis}
+		[
+			scale only axis,
+			hide axis,
+%			every axis plot/.style={very thin},
+			width=\plotwidth*0.5,
+			height=\plotheight*0.5,
+			at={(0.5*\plotwidth,-0.4*\plotheight)}
+		]
+			%=== Control Mesh
+			\addplot[very thick,dashed,color=Gray] table {\datatableControl};
+			%=== Previous Subdivision
+			\addplot[very thick,color=color1!20!White] table {\datatableOne};
+			%=== Previous Subdivision
+			\addplot[very thick,color=color1!60!White] table {\datatableTwo};
+			%=== Previous Subdivision
+			\addplot[very thick,color=color1] table {\datatableThree};
+			%=== Subdivision
+			\addplot[very thick,color=Black] table {\datatableFour};
+			
+		\end{axis}
+		
+		
+	\end{tikzpicture}
+	
+	\end{document}

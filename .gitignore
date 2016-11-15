@@ -163,6 +163,7 @@ pythontex-files-*/
 
 # TikZ & PGF
 *.dpth
+*.dep
 *.md5
 *.auxlock
 
