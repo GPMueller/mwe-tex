@@ -1,0 +1,195 @@
+	\documentclass{report}
+	\usepackage[T1]{fontenc}
+	\usepackage[utf8]{inputenc}
+	\usepackage[english]{babel}
+	
+	\usepackage[dvipsnames]{xcolor}
+	
+	\usepackage{tikz,pgfplots,pgfplotstable}
+	\pgfplotsset{compat=newest}
+	
+	%===================================================
+	\usetikzlibrary{positioning,plotmarks,external}
+	\tikzexternalize[mode=convert with system call,shell escape=-enable-write18]
+	%===================================================
+	
+	
+	%==== Line Colors CMYK ==============================
+	%\definecolor{color1}{cmyk}{0.784,0.506,0,0}      % Blue
+	\colorlet{color1}{RoyalBlue}
+	\definecolor{color2}{cmyk}{0,0.886,0.877,0.106}  % Red
+	\definecolor{color3}{cmyk}{0,0.502,1,0}          % Orange
+	\definecolor{color4}{cmyk}{0.56,0,0.577,0.314}   % Green
+	%\definecolor{color5}{cmyk}{0.0675,0.521,0,0.361} % Purple
+	\definecolor{color5}{cmyk}{0.62,0.79,0,0} % Purple
+	\definecolor{color6}{cmyk}{0,0,0.8,0}            % Yellow
+	\definecolor{color01}{cmyk}{0,0,0,0}             % White
+	\definecolor{color02}{cmyk}{0,0,0,1}             % Black
+	\definecolor{color03}{cmyk}{0,0,0,0.55}          % Gray
+	%\definecolor{pureblue}{cmyk}{1,1,0,0}
+	%\definecolor{puregreen}{cmyk}{1,0,1,0}
+	%\definecolor{purered}{cmyk}{0,1,1,0}
+	%===================================================
+	
+	
+	
+	%==== Plot Styles  =================================
+	\pgfplotsset
+	{
+		axisStyleA/.style=
+		{
+			axis line style =
+			{
+				very thick,
+				shorten <=-0.5\pgflinewidth,
+				Black!55
+			},
+			ylabel near ticks,
+			label style=
+			{
+				font=\small%\inplottext
+			},
+%			unit marking pre={\inplottextsize\lbrack}, %\inplottext \mathrm{in}},
+%			unit marking post={\inplottextsize\rbrack},
+			ticklabel style=
+			{
+				color=Black!55,
+				%font=\ssfamily % % Think about sans serif font for ticklabels!
+				font=\small%\inplottextsize % don't use non-math font for numbers
+			},
+			tick style=
+			{
+				thick
+			},
+			axis lines=left,
+			y tick scale label style={xshift=-1em}
+		}
+	}
+	%===================================================
+	
+	%==== fix the axis being below the plot lines ======
+%	\pgfplotsset
+%	{
+%		axis line on top/.style=
+%		{
+%			axis line style=transparent,
+%			ticklabel style=transparent,
+%			tick style=transparent,
+%			axis on top=false,
+%			after end axis/.append code=
+%			{
+%				\pgfplotsset
+%				{
+%					axis line style=opaque,
+%					ticklabel style=opaque,
+%					tick style=opaque,
+%					grid=none,
+%					every extra x tick/.style={grid=none},
+%					every extra y tick/.style={grid=none}},
+%					\pgfplotsdrawaxis
+%				}
+%			}
+%		}
+%	}
+	%===================================
+	
+	
+	
+	
+	\begin{document}
+	
+	\begin{tikzpicture}
+		
+		%==== Plot Sizes
+		\newcommand{\plotwidth}{0.7*\linewidth}
+		\newcommand{\plotheight}{3.0/5.0*\plotwidth}
+		
+		
+		%==== Data: Tables
+		\pgfplotstableread{Data/bspline_uniform_1D.dat}\bsplineUniform
+		\pgfplotstableread{Data/bspline_nonuniform_1D.dat}\bsplineNonUniform
+		\pgfplotstableread{Data/fem_lin_1D.dat}\femLin
+		\pgfplotstableread{Data/fem_quadr_1D.dat}\femQuad
+		
+		%==== Top left
+		\begin{axis}
+		[
+			axisStyleA,
+			scale only axis,
+			xmin=-0.1,
+			xmax=1.1,
+			ymin=-0.1,
+			ymax=0.78,
+%			hide axis,
+%			every axis plot/.style={very thin},
+			width=\plotwidth*0.5,
+			height=\plotheight*0.5,
+			at={(0,0)}
+		]
+			\addplot[very thick,color=color1] table [x expr=\thisrowno{0}, y expr=\thisrowno{1}] {\bsplineUniform};
+			\addplot[very thick,color=color2] table [x expr=\thisrowno{0}, y expr=\thisrowno{2}] {\bsplineUniform};
+			\addplot[very thick,color=color3] table [x expr=\thisrowno{0}, y expr=\thisrowno{3}] {\bsplineUniform};
+			\addplot[very thick,color=color4] table [x expr=\thisrowno{0}, y expr=\thisrowno{4}] {\bsplineUniform};
+			\addplot[very thick,color=color5] table [x expr=\thisrowno{0}, y expr=\thisrowno{5}] {\bsplineUniform};
+			\addplot[very thick,color=color6] table [x expr=\thisrowno{0}, y expr=\thisrowno{6}] {\bsplineUniform};
+			
+		\end{axis}
+		
+		
+		%==== Top right
+		\begin{axis}
+		[
+			scale only axis,
+%			hide axis,
+%			every axis plot/.style={very thin},
+			width=\plotwidth*0.5,
+			height=\plotheight*0.5,
+			at={(0.6*\plotwidth,0)}
+		]
+			\addplot[very thick,color=Red] table [x expr=\thisrowno{0}, y expr=\thisrowno{1}] {\bsplineNonUniform};
+			\addplot[very thick,color=Blue] table [x expr=\thisrowno{0}, y expr=\thisrowno{2}] {\bsplineNonUniform};
+			\addplot[very thick,color=Green] table [x expr=\thisrowno{0}, y expr=\thisrowno{3}] {\bsplineNonUniform};
+			\addplot[very thick,color=Orange] table [x expr=\thisrowno{0}, y expr=\thisrowno{4}] {\bsplineNonUniform};
+			\addplot[very thick,color=Yellow] table [x expr=\thisrowno{0}, y expr=\thisrowno{5}] {\bsplineNonUniform};
+			\addplot[very thick,color=Purple] table [x expr=\thisrowno{0}, y expr=\thisrowno{6}] {\bsplineNonUniform};
+			
+		\end{axis}
+		
+		
+		%==== Bottom left
+		\begin{axis}
+		[
+			axisStyleA,
+			scale only axis,
+%			hide axis,
+%			every axis plot/.style={very thin},
+			width=\plotwidth*0.5,
+			height=\plotheight*0.5,
+			at={(0,-0.6*\plotheight)}
+		]
+			\addplot[very thick,color=Red] table [x expr=\thisrowno{0}, y expr=\thisrowno{1}] {\femLin};
+			\addplot[very thick,color=Blue] table [x expr=\thisrowno{0}, y expr=\thisrowno{2}] {\femLin};
+			
+		\end{axis}
+		
+		
+		%==== Bottom right
+		\begin{axis}
+		[
+			axisStyleA,
+			scale only axis,
+%			hide axis,
+%			every axis plot/.style={very thin},
+			width=\plotwidth*0.5,
+			height=\plotheight*0.5,
+			at={(0.6*\plotwidth,-0.6*\plotheight)}
+		]
+			\addplot[very thick,color=Red] table [x expr=\thisrowno{0}, y expr=\thisrowno{1}] {\femQuad};
+			\addplot[very thick,color=Blue] table [x expr=\thisrowno{0}, y expr=\thisrowno{2}] {\femQuad};
+			\addplot[very thick,color=Green] table [x expr=\thisrowno{0}, y expr=\thisrowno{3}] {\femQuad};
+			
+		\end{axis}
+		
+	\end{tikzpicture}
+	
+	\end{document}
