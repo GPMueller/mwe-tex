@@ -1,0 +1,4 @@
+{Type}              			{Style}         		{Example}					{Exception}
+{Vector ($2$D, $3$D)}      		{Arrow on top}  		{$\vec{v}$}					{}
+{Unit Vector}      			{Hat on top}  			{$\hat{v}$}					{}
+{Cartesian Component}   		{Roman}        			{$v_\alpha,\quad \alpha\in\{x,y,z\}$}		{}

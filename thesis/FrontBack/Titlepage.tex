@@ -1,0 +1,75 @@
+%*******************************************************
+% Titlepage
+%*******************************************************
+\begin{titlepage}
+
+	\pdfbookmark[1]{Title Page}{titlepage}
+	% if you want the titlepage to be centered, uncomment and fine-tune the line below (KOMA classes environment)
+	\begin{addmargin}{-3cm} %[-1cm]{-3cm}
+	\begin{center}
+		
+		\vfill
+		\hfill
+%		\bigskip
+%		\bigskip
+%		\bigskip
+%		\bigskip
+		\vfill
+		
+		\begingroup
+%			\doublespacing
+			\huge\spacedlowsmallcaps{\myTitle}
+			
+			\bigskip
+			\bigskip
+			\bigskip
+			\bigskip
+			\bigskip
+			
+			{\setstretch{0.8}
+				\huge\spacedallcaps{\mySubtitle}
+			\par}
+			
+%			\huge\spacedallcaps{\myDraft}
+		
+		\endgroup
+		
+		\bigskip
+		\bigskip
+%		\smallskip
+		
+		by \\
+		\medskip
+		\spacedlowsmallcaps{\Large\myName}
+
+		\vfill
+		\vfill
+
+%        \includegraphics[width=6cm]{gfx/TFZsuperellipse_bw} \\ \medskip
+
+		\vfill
+		
+		%\myDegree \\
+		Submitted to the\\
+		\spacedlowsmallcaps{\myFaculty} \\
+		of the \myUni \\
+		
+		\bigskip
+		\bigskip
+		
+		in \\
+		\myTime\\ %\ -- \myVersion\\
+		
+		\bigskip
+		\bigskip
+		\bigskip
+		
+		written at the \\
+		\myDepartment \\
+		\myLocation
+
+%		\vfill
+
+		\end{center}
+	\end{addmargin}
+\end{titlepage}

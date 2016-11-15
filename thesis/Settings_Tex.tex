@@ -1,0 +1,608 @@
+%==== Language etc.
+\usepackage[english]{babel}
+
+\usepackage{lipsum}
+%\usepackage{url}
+%\usepackage[nochapters]{../classicthesis} % nochapters
+
+
+%==== Subfiles
+%\usepackage{subfiles}
+
+
+
+
+%==== Colors
+\usepackage[cmyk,dvipsnames]{xcolor}
+
+%==== -----
+%\usepackage{verbatim}
+%\usepackage{dcolumn}
+%\usepackage{bm}
+
+
+%==== Float positioning
+\usepackage{float}
+
+
+
+%==== Whatever
+\PassOptionsToPackage{pdftex,hyperfootnotes=false,pdfpagelabels}{hyperref}
+	\usepackage{hyperref}  % backref linktocpage pagebackref
+\pdfcompresslevel=9
+\pdfadjustspacing=1 
+%\PassOptionsToPackage{pdftex}{graphicx}
+%	\usepackage{graphicx} 
+
+%==== Whatevs
+\newcounter{dummy} % necessary for correct hyperlinks (to index, bib, etc.)
+\newlength{\abcd} % for ab..z string length calculation
+
+%==================================
+
+
+
+%==== Standard Fonts ====
+%--- activation of Charter for text and CMR for math
+\usepackage{charter} % pretty text (slightly oldschool)
+%\usepackage{palatino}
+
+
+%==== Math and other Fonts =======
+\usepackage{amssymb,amsmath} % what's this for again
+
+%\usepackage[expert]{mathdesign} % expert math font (what is this mathdesign for?)
+%\usepackage[euler-digits,euler-hat-accent]{euler} % pretty math
+\usepackage{arevmath} %,arevtext} % nice sans serif math font
+%\usepackage[euler-digits,euler-hat-accent]{eulervm}
+%\usepackage{mathpazo}
+%\SetMathAlphabet{\mathrm}{normal}{\encodingdefault}{cmss}{\mddefault}{n} % set mathrm to use the sans serif font
+
+% usage: \DeclareMathSizes {t-size} {mt-size} {s-size} {ss-size}
+\DeclareMathSizes{9}{8}{5}{5}		% for size 9 text
+\DeclareMathSizes{10}{9}{5}{5}     % For size 10 text
+\DeclareMathSizes{10.95}{10}{6}{5}     % For size 11 text (11pt=10*sqrt(1.2))
+\DeclareMathSizes{11}{10}{6}{5}     % For size 11 text
+\DeclareMathSizes{12}{11}{7}{6}     % For size 12 text. see also http://tex.stackexchange.com/questions/8434/how-to-scale-math-font-only
+
+%\fontsize{11pt}{10pt}\selectfont % maybe these sizes work better?
+%\fontsize{12pt}{11pt}\selectfont
+
+\usepackage[
+	activate={true,nocompatibility},
+	final,
+	tracking=true,
+	kerning=true,
+	spacing=true,
+	factor=1100,
+	stretch=10,
+	shrink=10]
+	{microtype}
+\microtypesetup{expansion=false}
+		% activate={true,nocompatibility} - activate protrusion and expansion
+		% final - enable microtype; use "draft" to disable
+		% tracking=true, kerning=true, spacing=true - activate these techniques
+		% factor=1100 - add 10% to the protrusion amount (default is 1000)
+		% stretch=10, shrink=10 - reduce stretchability/shrinkability (default is 20/20)
+
+%==== FONT: Line Spacing =========
+%\renewcommand{\baselinestretch}{1.2}
+\usepackage{setspace}
+%\setstretch{1.15}
+\setstretch{1.1}
+%==== FONT: Paragraphs ==========
+\setlength{\parindent}{0cm}
+%==== FONT: Captions ===========
+\usepackage[margin=1.0cm, labelsep=endash]{caption}
+%\captionsetup{labelfont=bf,format=hang}
+%\captionsetup{font=small,labelfont=bf,format=plain}
+%\captionsetup{format=plain}
+%\captionsetup{format=hang}
+%\renewcommand{\figurename}{\spacedlowsmallcaps{\figurename}}
+%\renewcommand{\thefigure}{\spacedlowsmallcaps{\thefigure}}
+%\renewcommand{\thefigure}{\spacedlowsmallcaps{\figurename \thefigure}}
+
+% nicer captions with titles
+\newcommand\thiscaption{}
+%\newcommand{\tablecaption}[2]{\def\thistablecaption{#1}\caption[#1]{#2}}
+\newcommand{\mycaption}[2][]{\def\thiscaption{#1}\caption[#1]{#2}}
+\DeclareCaptionFont{filler}{}
+\DeclareCaptionFormat{myformat}{
+	\small
+	{\centering {\footnotesize\spacedallcaps{#1}}#2  {\captionlabelfont\thiscaption}\par}
+	\vspace*{0.4\baselineskip}
+	#3
+}
+\captionsetup{labelfont=filler,format=myformat}
+%==========================
+
+
+%==== Fonts: Spaced Caps ==========
+\usepackage{textcase} 
+\microtypesetup{expansion=false}
+\newcommand{\spacedallcaps}[1]{\spaceskip=1.5\fontdimen2\font plus 1.5\fontdimen3\font minus 1.5\fontdimen4\font \textls[120]{\MakeTextUppercase{#1}}}
+\newcommand{\spacedlowsmallcaps}[1]{\spaceskip=1.5\fontdimen2\font plus 1.5\fontdimen3\font minus 1.5\fontdimen4\font \textls[70]{\scshape\MakeTextLowercase{#1}}}
+
+%\usepackage{soul} % for letterspacing 
+%\sodef\allcapsspacing{\upshape}{0.15em}{0.65em}{0.6em}
+%\sodef\lowsmallcapsspacing{\scshape}{0.0em}{0.5em}{0.6em}
+%\renewcommand{\spacedallcaps}[1]{\MakeTextUppercase{\allcapsspacing{#1}}}
+%\renewcommand{\spacedlowsmallcaps}[1]{\MakeTextLowercase{\textsc{\lowsmallcapsspacing{#1}}}}
+%==========================
+
+
+
+% ********************************************************************
+% Textblock size
+%*******************************************************
+\usepackage{typearea}
+%\areaset[binding offset]{width}{height}
+\areaset[40pt]{366pt}{750pt} % ~ 336 * factor 2 + 33 head + 42 \the\footskip 
+%	\areaset{336pt}{761pt} % 686 (factor 2.2) + 33 head + 42 head \the\footskip 10pt
+\setlength{\marginparwidth}{7em}%
+\setlength{\marginparsep}{2em}%
+%=========================================================
+
+
+%==== SI Units ======================================
+\usepackage{siunitx}
+%\newcommand{\siunit}[1]{\ \lbrack\si{#1}\rbrack}
+\newcommand{\siunit}[1]{{\inplottext\ \si{\mathrm{#1}}}}
+\sisetup
+{
+	mode = text,
+	detect-all,
+	exponent-product = \cdot,
+%	scientific-notation = true,
+%  number-unit-separator=\text{\,},
+%  output-decimal-marker={\text{,}},
+%  math-rm=\mathsf,
+%  text-rm=\sffamily,
+}
+%\SendSettingsToPgf %SiUnitX sends settings to PGF
+%================================================
+
+
+
+%==== Harpoon instead of arrow for vector =====================
+%\renewcommand{\vec}[1]{\overset{\rightharpoonup}{\rule{0pt}{.7ex}\smash{#1}}}
+%\renewcommand{\vec}[1]{\overset{\rightharpoonup}{\vphantom{#1}\smash{#1}}}
+
+%\usepackage{harpoon}
+%\renewcommand{\vec}[1]{\text{\overrightharp{\ensuremath{#1}}}}
+
+%\usepackage{scalerel}
+%%\scalerel*{#1}{\rule[-.2\LMex]{0pt}{1.4\LMex}}
+%\renewcommand{\vec}[1]{\overset{\rightharpoonup}{\vphantom{\rule[-.2\LMex]{0pt}{1.4\LMex}}\smash{#1}}}
+
+
+%\renewcommand{\vec}[1]{\overset{\rightharpoonup}{\vphantom{a}\smash{#1}}}
+
+
+%\renewcommand{\vec}[1]{\overset{\rightharpoonup}{\rule{0pt}{\fontdimen5{#1}}\smash{#1}}}
+%=================================================
+
+
+%==== Nice Tables =====================================
+\usepackage{booktabs} % nicer tables
+\usepackage{tabularx} % better tables
+	\setlength{\extrarowheight}{3pt} % increase table row height
+\newcommand{\tableheadline}[1]{\multicolumn{1}{c}{\spacedlowsmallcaps{#1}}}
+\newcommand{\myfloatalign}{\centering} % to be used with each float for alignment
+%=================================================
+
+
+
+
+%==== Figures: Styling ===================================
+%\usepackage{caption}
+%\captionsetup{format=hang,font=small}
+\usepackage{subfig}
+%==== Figures: Graphics
+\usepackage[pdftex]{graphicx}
+%\graphicspath{{images/}{../images/}}
+%=================================================
+
+
+
+
+
+%==== Page styling stuff ====
+\usepackage{scrextend} % For addmargin environment
+%====================
+
+
+%==== Headline Styling ===================================
+\usepackage[automark]{scrpage2} % provides headers and footers (KOMA Script)
+%\clearscrheadings
+\clearscrheadfoot
+\setheadsepline{0pt}
+%\ifthenelse{\boolean{@nochapters}}%
+%    {\relax}%
+	{\renewcommand{\chaptermark}[1]{\markboth{\spacedlowsmallcaps{#1}}{\spacedlowsmallcaps{#1}}}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\enspace\spacedlowsmallcaps{#1}}} 
+
+%\renewcommand*{\chapterpagestyle}{ChapterStyle}
+
+%\lehead{\mbox{\llap{\small\thepage\kern2em}\headmark\hfil}}
+%\rohead{\mbox{\hfil{\headmark}\rlap{\small\kern2em\thepage}}}
+
+%\cfoot[\pagemark{}]% for pagestyle `scrplain`
+%		{\pagemark{}}% for pagestyle `scrheading`
+
+\lehead{\mbox{\headmark\hfil}}
+\rohead{\mbox{\hfil{\headmark}}}
+
+\lefoot[\mbox{\small\pagemark{}}]{\mbox{\small\pagemark{}}}
+\rofoot[\mbox{\small\pagemark{}}]{\mbox{\small\pagemark{}}}
+
+
+\renewcommand{\headfont}{\small}
+%    \DeclareRobustCommand{\fixBothHeadlines}[2]{} % <--- ToDo
+% hack to get the content headlines right (thanks, Lorenzo!)
+%	\def\toc@heading{%
+%		\ifthenelse{\boolean{@nochapters}}%
+%		{\section*{\contentsname}}%nochapters
+%		{\chapter*{\contentsname}}%chapters
+%		\@mkboth{\spacedlowsmallcaps{\contentsname}}{\spacedlowsmallcaps{\contentsname}}}
+	\def\toc@heading{
+		\chapter*{\contentsname}
+		\@mkboth{\spacedlowsmallcaps{\contentsname}}{\spacedlowsmallcaps{\contentsname}}
+	}
+%====================================================
+
+
+
+%==== Graffiti Whatever ===============================
+% Graffiti as in GKP's book "Concrete Mathematics"
+% thanks to Lorenzo Pantieri and Enrico Gregorio
+\def\graffito@setup{%
+   \slshape\footnotesize%
+   \parindent=0pt \lineskip=0pt \lineskiplimit=0pt %
+   \tolerance=2000 \hyphenpenalty=300 \exhyphenpenalty=300%
+   \doublehyphendemerits=100000%
+   \finalhyphendemerits=\doublehyphendemerits}
+%\DeclareRobustCommand{\graffito}[1]{\marginpar%
+% [\graffito@setup\raggedleft\hspace{0pt}{#1}]%
+% {\graffito@setup\raggedright\hspace{0pt}{#1}}}
+\let\oldmarginpar\marginpar
+\renewcommand{\marginpar}[1]{\oldmarginpar%
+ [\graffito@setup\raggedleft\hspace{0pt}{#1}]%
+ {\graffito@setup\raggedright\hspace{0pt}{#1}}}
+%===============================================
+
+
+
+%==== Heading Styling ============================================
+\usepackage[explicit]{titlesec}
+	% chapters with numbers
+	\titleformat {\chapter} % command
+		[display] % shape
+		{\relax} % format
+		{
+			\large
+			\noindent
+			\spacedallcaps{#1}
+			\hfill
+			\Huge
+			\thechapter
+		} % label
+		{0.5ex} % sep
+		{
+			\normalsize
+%			\vspace*{.8\baselineskip}
+			\titlerule
+		} % before-code
+%		[
+%			
+%		] % after-code
+	
+	% unnumbered chapters (such as toc)
+	\titleformat {name=\chapter,numberless}
+		[display] % shape
+		{\relax} % format
+		{
+			\large
+			\noindent
+			\spacedallcaps{#1}
+		} % label
+		{0.5ex} % sep
+		{
+			\normalsize
+%			\vspace*{.8\baselineskip}
+			\titlerule
+		} % before-code
+		[\vspace{-6.5ex}]
+%	\titlespacing*{\chapter}{0pt}{120pt}{6pt}
+	
+    % sections \FloatBarrier
+    \titleformat{\section}
+        {\relax\vspace*{\baselineskip}}{{\textsc{\MakeTextLowercase{\thesection}}}}{1em}{\spacedallcaps{#1}}
+    % subsections
+    \titleformat{\subsection}
+        {\relax}{\textsc{\MakeTextLowercase{\thesubsection}}}{1em}{\normalsize\itshape #1}
+    % subsubsections
+    \titleformat{\subsubsection}
+        {\relax}{\textsc{\MakeTextLowercase{\thesubsubsection}}}{1em}{\normalsize\itshape #1}
+    % paragraphs
+    \titleformat{\paragraph}[runin]
+        {\normalfont\normalsize}{\theparagraph}{0pt}{\spacedlowsmallcaps{#1}}
+    % descriptionlabels
+        \renewcommand{\descriptionlabel}[1]{\hspace*{\labelsep}\spacedlowsmallcaps{#1}}   % spacedlowsmallcaps textit textsc
+    % spacing
+%    \ifthenelse{\boolean{@nochapters}}%
+%        {\relax}%
+%        {\titlespacing*{\chapter}{0pt}{1\baselineskip}{1.2\baselineskip}}
+    \titlespacing*{\section}{0pt}{1.25\baselineskip}{1\baselineskip} 
+    \titlespacing*{\subsection}{0pt}{1.25\baselineskip}{1\baselineskip}
+    \titlespacing*{\paragraph}{0pt}{1\baselineskip}{1\baselineskip}
+%=============================================================
+
+
+
+%==== Tex subfile with Tikz stuff =============
+%==== to be used in Main Tex file ====
+\makeatletter
+\newcommand{\subfilewithtikz}[1]
+{
+	\providecommand{\tikzfolder}{}
+	\renewcommand{\tikzfolder}{\maintex/#1/Tikz}
+	\providecommand{\datafolder}{}
+	\renewcommand{\datafolder}{\maintex/#1/Data}
+	\providecommand{\imagesfolder}{}
+	\renewcommand{\imagesfolder}{\maintex/#1/Images}
+	\tikzsetexternalprefix{\maintex/#1/output/}
+	\input{#1/#1}
+	%\subfile{#1/#1}
+}
+\makeatother
+%==================================
+
+
+
+%==== NatBib
+\usepackage[square,numbers,sort]{natbib}
+%==========
+
+
+%%==== Figures centered by default ============
+\makeatletter
+\g@addto@macro\@floatboxreset\centering
+\makeatother
+%%==================================
+
+
+
+%==== Code Listings Styling ==============================
+%\usepackage{listings} 
+%%\lstset{emph={trueIndex,root},emphstyle=\color{BlueViolet}}%\underbar} % for special keywords
+%\lstset{language=[LaTeX]Tex,%C++,
+%    keywordstyle=\color{RoyalBlue},%\bfseries,
+%    basicstyle=\small\ttfamily,
+%    %identifierstyle=\color{NavyBlue},
+%    commentstyle=\color{Green}\ttfamily,
+%    stringstyle=\rmfamily,
+%    numbers=none,%left,%
+%    numberstyle=\scriptsize,%\tiny
+%    stepnumber=5,
+%    numbersep=8pt,
+%    showstringspaces=false,
+%    breaklines=true,
+%    frameround=ftff,
+%    frame=single,
+%    belowcaptionskip=.75\baselineskip
+%    %frame=L
+%} 
+%==============================================
+
+
+
+
+%==== Backref Styling for Bibliography ====================
+%==== (translate the options to any language you use)
+%\newcommand{\backrefnotcitedstring}{\relax}%(Not cited.)
+%\newcommand{\backrefcitedsinglestring}[1]{(Cited on page~#1.)}
+%\newcommand{\backrefcitedmultistring}[1]{(Cited on pages~#1.)}
+%\ifthenelse{\boolean{enable-backrefs}}%
+%{%
+%		\PassOptionsToPackage{hyperpageref}{backref}
+%		\usepackage{backref} % to be loaded after hyperref package 
+%		   \renewcommand{\backreftwosep}{ and~} % separate 2 pages
+%		   \renewcommand{\backreflastsep}{, and~} % separate last of longer list
+%		   \renewcommand*{\backref}[1]{}  % disable standard
+%		   \renewcommand*{\backrefalt}[4]{% detailed backref
+%		      \ifcase #1 %
+%		         \backrefnotcitedstring%
+%		      \or%
+%		         \backrefcitedsinglestring{#2}%
+%		      \else%
+%		         \backrefcitedmultistring{#2}%
+%		      \fi}%
+%}{\relax}    
+%==================================
+
+
+
+%==== Hyperref ========================
+\hypersetup{%
+    %draft,	% = no hyperlinking at all (useful in b/w printouts)
+    colorlinks=true, linktocpage=true, pdfstartpage=1, pdfstartview=FitV,%
+    % uncomment the following line if you want to have black links (e.g., for printing)
+    %colorlinks=false, linktocpage=false, pdfborder={0 0 0}, pdfstartpage=3, pdfstartview=FitV,% 
+    breaklinks=true, pdfpagemode=UseNone, pageanchor=true, pdfpagemode=UseOutlines,%
+    plainpages=false, bookmarksnumbered, bookmarksopen=true, bookmarksopenlevel=1,%
+    hypertexnames=true, pdfhighlight=/O,%nesting=true,%frenchlinks,%
+    urlcolor=RoyalBlue, linkcolor=RoyalBlue, citecolor=RoyalBlue,%citecolor=webgreen, %pagecolor=RoyalBlue,%
+    %urlcolor=Black, linkcolor=Black, citecolor=Black, %pagecolor=Black,%
+    pdftitle={\myTitle},%
+    pdfauthor={\textcopyright\ \myName, \myUni, \myFaculty},%
+    pdfsubject={},%
+    pdfkeywords={},%
+    pdfcreator={pdfLaTeX},%
+    pdfproducer={LaTeX with hyperref and classicthesis}%
+}
+%====================================
+
+
+
+%==== Autoref Names fixing ==================
+\makeatletter
+\@ifpackageloaded{babel}%
+    {%
+       \addto\extrasenglish{%
+					\renewcommand*{\figureautorefname}{Figure}%
+					\renewcommand*{\tableautorefname}{Table}%
+					\renewcommand*{\partautorefname}{Part}%
+					\renewcommand*{\chapterautorefname}{Chapter}%
+					\renewcommand*{\sectionautorefname}{Section}%
+					\renewcommand*{\subsectionautorefname}{Section}%
+					\renewcommand*{\subsubsectionautorefname}{Section}% 	
+				}%
+       \addto\extrasngerman{% 
+					\renewcommand*{\paragraphautorefname}{Absatz}%
+					\renewcommand*{\subparagraphautorefname}{Unterabsatz}%
+					\renewcommand*{\footnoteautorefname}{Fu\"snote}%
+					\renewcommand*{\FancyVerbLineautorefname}{Zeile}%
+					\renewcommand*{\theoremautorefname}{Theorem}%
+					\renewcommand*{\appendixautorefname}{Anhang}%
+					\renewcommand*{\equationautorefname}{Gleichung}%        
+					\renewcommand*{\itemautorefname}{Punkt}%
+				}%	
+			% Fix to getting autorefs for subfigures right (thanks to Belinda Vogt for changing the definition)
+			\providecommand{\subfigureautorefname}{\figureautorefname}%  			
+    }{\relax}
+\makeatother
+%=================================
+
+
+
+
+
+
+% ******************************************************************** 
+% General useful packages
+% ******************************************************************** 
+%\PassOptionsToPackage{T1}{fontenc} % T2A for cyrillics
+%	\usepackage{fontenc}     
+\usepackage{textcomp} % fix warning with missing font shapes
+\usepackage{scrhack} % fix warnings when using KOMA with listings package          
+\usepackage{xspace} % to get the spacing after macros right
+\usepackage{mparhack} % get marginpar right
+\usepackage{fixltx2e} % fixes some LaTeX stuff
+\usepackage{braket}
+% ****************************************************************************************************
+
+
+%==== Acronyms =========================
+%\usepackage[printonlyused,smaller]{acronym} % nice macros for handling all acronyms in the thesis
+\usepackage[smaller]{acronym} % nice macros for handling all acronyms in the thesis
+\renewcommand*{\acsfont}[1]{{\textmd{#1}}}
+%\renewcommand*{\acsfont}[1]{\textssc{#1}} % for MinionPro
+%%\renewcommand{\bflabel}[1]{{#1}\hfill} % fix the list of acronyms
+\renewcommand{\aclabelfont}[1]{{#1}\hfill} % fix the list of acronyms
+
+%\makeatletter % To hide the link color from acronyms, see http://tex.stackexchange.com/questions/73063/acronym-hyperlink-without-special-color
+%\AtBeginDocument{%
+%  \renewcommand*{\AC@hyperlink}[2]{%
+%    \begingroup
+%      \hypersetup{hidelinks}%
+%      \hyperlink{#1}{#2}%
+%    \endgroup
+%  }%
+%}
+%\makeatother
+%=====================================
+
+
+%==== Multireferencing with \cref ===============
+\usepackage[capitalise,noabbrev,nameinlink]{cleveref}
+%%\creflabelformat{equation}{(#2#1#3)}
+%%\crefdefaultlabelformat{#2#1#3}
+%\crefformat{equation}{baloney~#2#1#3}
+%\crefformat{equation}{balooney~#2#1#3}
+%%\Crefformat{equation}{Equation~\textup{#2#1#3}}
+%\crefrangeformat{equation}{balolney.~#3#1#4--#5#2#6}
+
+\crefmultiformat{equation}{Equations~#2#1#3}{ and~#2#1#3}{, #2#1#3}{ and~#2#1#3} % removes parentheses from "Equations (...) and (...)" etc.
+
+%\def\equationautorefname~#1\null{Equation~(#1)\null}	% adds parentheses to \autoref for equations
+
+%==== Parentheses around Equation numbers
+% First, save the current form of `\theequation`
+    \let\oldtheequation\theequation
+    \makeatletter
+    \def\tagform@#1{\maketag@@@{\ignorespaces#1\unskip\@@italiccorr}}
+    \renewcommand{\theequation}{(\oldtheequation)}
+    \makeatother 
+%=====================================
+
+
+
+% ********************************************************************                
+% layout of the TOC, LOF and LOT (LOL-workaround see next section)
+% ********************************************************************
+
+\usepackage[subfigure,titles]{tocloft}
+%\usepackage[subfigure]{tocloft}
+%    % avoid page numbers being right-aligned in fixed-size box              
+%    \newlength{\newnumberwidth}
+%    \settowidth{\newnumberwidth}{999} % yields overfull hbox warnings for pages > 999
+%    \cftsetpnumwidth{\newnumberwidth}
+
+% have the bib neatly positioned after the rest
+\newlength{\beforebibskip}
+\setlength{\beforebibskip}{0em}
+
+% chapters
+\renewcommand{\cftchappresnum}{\scshape\MakeTextLowercase}
+\renewcommand{\cftchapfont}{\normalfont}
+\renewcommand{\cftchappagefont}{\normalfont}
+\relax
+
+% sections
+\renewcommand{\cftsecpresnum}{\scshape\MakeTextLowercase}
+\renewcommand{\cftsecfont}{\normalfont}
+\renewcommand{\cftsecpagefont}{\normalfont}
+\relax
+
+% figures
+\renewcommand{\cftfigpresnum}{\scshape\MakeTextLowercase}%
+\renewcommand{\cftfigfont}{\normalfont}
+\renewcommand{\cftfigpresnum}{\figurename~}%Fig.~}
+\newlength{\figurelabelwidth}
+\settowidth{\figurelabelwidth}{\cftfigpresnum~999}
+\addtolength{\figurelabelwidth}{2.5em}
+\cftsetindents{figure}{0em}{\figurelabelwidth}
+
+% tables
+\renewcommand{\cfttabpresnum}{\scshape\MakeTextLowercase}
+\renewcommand{\cfttabfont}{\normalfont}
+\renewcommand{\cfttabpresnum}{\tablename~}%Tab.~}
+\newlength{\tablelabelwidth}
+\settowidth{\tablelabelwidth}{\cfttabpresnum~999}
+\addtolength{\tablelabelwidth}{2.5em}
+%\cftsetindents{table}{0em}{\tablelabelwidth}
+\cftsetindents{table}{0em}{\figurelabelwidth}
+
+%% Spacing after titles of toc lof and lot
+%\AtBeginDocument{\addtocontents{toc}{\protect\vspace{-\cftaftertoctitleskip}}}
+%\AtBeginDocument{\addtocontents{lof}{\protect\vspace{-\cftafterloftitleskip}}}
+%\AtBeginDocument{\addtocontents{lot}{\protect\vspace{-\cftafterlottitleskip}}}
+
+
+% Something...
+\let\oldchap=\chapter
+\renewcommand*{\chapter}{%
+	\secdef{\Chap}{\ChapS}%
+}
+\newcommand\ChapS[1]{\oldchap*{#1}}%
+\newcommand\Chap[2][]{%
+	\oldchap[\texorpdfstring{\spacedlowsmallcaps{#1}}{#1}]{#2}%
+	
+}%
+
+\newcommand{\tocEntry}[1]{% for bib, etc.
+	\texorpdfstring{\spacedlowsmallcaps{#1}}{#1}%
+}
+
+% ********************************************************************

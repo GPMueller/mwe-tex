@@ -1,0 +1,127 @@
+%*******************************************************
+% Table of Contents
+%*******************************************************
+\phantomsection
+\refstepcounter{dummy}
+\pdfbookmark[1]{\contentsname}{tableofcontents}
+\setcounter{tocdepth}{2} % <-- 2 includes up to subsections in the ToC
+\setcounter{secnumdepth}{3} % <-- 3 numbers up to subsubsections
+\manualmark
+\markboth{\spacedlowsmallcaps{\contentsname}}{\spacedlowsmallcaps{\contentsname}}
+\tableofcontents 
+\automark[section]{chapter}
+\renewcommand{\chaptermark}[1]{\markboth{\spacedlowsmallcaps{#1}}{\spacedlowsmallcaps{#1}}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\enspace\spacedlowsmallcaps{#1}}}
+
+
+
+%*******************************************************
+% List of Figures and of the Tables
+%*******************************************************
+\clearpage
+
+\begingroup 
+    \let\clearpage\relax
+    \let\cleardoublepage\relax
+    \let\cleardoublepage\relax
+    
+    %*******************************************************
+    % List of Figures
+    %*******************************************************    
+    %\phantomsection 
+    \refstepcounter{dummy}
+    %\addcontentsline{toc}{chapter}{\listfigurename}
+    \pdfbookmark[1]{\listfigurename}{lof}
+       	\markboth{\spacedlowsmallcaps{\listfigurename}}{\spacedlowsmallcaps{\listfigurename}}
+    \listoffigures
+
+    \vspace*{8ex}
+
+	% clear a page, in case the bug of "List of Tables" not being smallcaps persists. (It appears incorrectly when in the header, presumably because the LOT is not a numbered chapter)
+	\cleardoublepage
+    %*******************************************************
+    % List of Tables
+    %*******************************************************
+    %\phantomsection 
+    \refstepcounter{dummy}
+    %\addcontentsline{toc}{chapter}{\listtablename}
+    \pdfbookmark[1]{\listtablename}{lot}
+   	\markboth{\spacedlowsmallcaps{\listtablename}}{\spacedlowsmallcaps{\listtablename}}
+    \listoftables
+        
+%    \vspace*{8ex}
+%%   \newpage
+%    
+%    %*******************************************************
+%    % List of Listings
+%    %*******************************************************      
+%	  %\phantomsection 
+%    \refstepcounter{dummy}
+%    %\addcontentsline{toc}{chapter}{\lstlistlistingname}
+%    \pdfbookmark[1]{\lstlistlistingname}{lol}
+%    \lstlistoflistings 
+
+	\vspace*{8ex}
+%	\newpage
+%	\clearpage
+	
+	%*******************************************************
+	% Acronyms
+	%*******************************************************
+	%\phantomsection 
+	\refstepcounter{dummy}
+	%\addcontentsline{toc}{chapter}{Acronyms}
+	\pdfbookmark[1]{Acronyms}{acronyms}
+	\markboth{\spacedlowsmallcaps{Acronyms}}{\spacedlowsmallcaps{Acronyms}}
+	\chapter*{Acronyms}
+	\begin{acronym}[GGGGG]
+		\acro{HDD}{hard disk drive}
+		\acro{SSD}{solid state drive}
+		\acro{ASD}{atomistic spin dynamics}
+	\end{acronym}
+	
+	
+\endgroup
+
+\clearpage
+
+\begingroup 
+    \let\clearpage\relax
+    \let\cleardoublepage\relax
+    \let\cleardoublepage\relax
+    
+	%*******************************************************
+	% Conventions
+	%*******************************************************    
+	%\phantomsection 
+	\refstepcounter{dummy}
+	%\addcontentsline{toc}{chapter}{Conventions}
+	\pdfbookmark[1]{Conventions}{conventions}
+	\markboth{\spacedlowsmallcaps{Conventions}}{\spacedlowsmallcaps{Conventions}}
+	\hypertarget{Front:Conventions}{}
+	\chapter*{Conventions}
+	%	\label{Section:Introduction_Conventions}
+	
+	This work tries to conform to the following conventions for mathematical expressions, as given in the following \autoref{Table:Conventions}.
+	
+	\begin{table}[htb] %[htbc]
+		\pgfplotstableread{FrontBack/Conventions.dat}{\table} %
+		\pgfplotstabletypeset
+		[
+			header=has colnames,
+			columns={Type,Style,Example},
+			columns/Type/.style={column type={l}, string type},
+			columns/Style/.style={column type={l}, string type},
+			columns/Example/.style={column type={l}, string type},
+			columns/Exception/.style={column type={l}, string type},
+			every head row/.style={before row=\toprule, after row=\midrule},
+			every last row/.style={after row=\bottomrule}
+		] {\table}
+		\mycaption[Relevant convention definitions]
+			{Relevant convention definitions... \lipsum[22]}
+		\label{Table:Conventions}
+	\end{table}
+	
+\endgroup
+
+\cleardoublepage

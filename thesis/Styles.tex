@@ -1,0 +1,301 @@
+%==== Line Colors CMYK ==============================
+%\definecolor{color1}{cmyk}{0.784,0.506,0,0}      % Blue
+\colorlet{color1}{RoyalBlue}
+\definecolor{color2}{cmyk}{0,0.886,0.877,0.106}  % Red
+\definecolor{color3}{cmyk}{0,0.502,1,0}          % Orange
+\definecolor{color4}{cmyk}{0.56,0,0.577,0.314}   % Green
+%\definecolor{color5}{cmyk}{0.0675,0.521,0,0.361} % Purple
+\definecolor{color5}{cmyk}{0.62,0.79,0,0} % Purple
+\definecolor{color6}{cmyk}{0,0,0.8,0}            % Yellow
+\definecolor{color01}{cmyk}{0,0,0,0}             % White
+\definecolor{color02}{cmyk}{0,0,0,1}             % Black
+\definecolor{color03}{cmyk}{0,0,0,0.55}          % Gray
+%\definecolor{pureblue}{cmyk}{1,1,0,0}
+%\definecolor{puregreen}{cmyk}{1,0,1,0}
+%\definecolor{purered}{cmyk}{0,1,1,0}
+%===================================================
+
+
+
+%==== Line Colors RGB ==============================
+%\definecolor{color1}{RGB}{55,126,184}   % Blue
+%\definecolor{color2}{RGB}{228,26,28}    % Red
+%\definecolor{color3}{RGB}{255,127,0}    % Orange
+%\definecolor{color4}{RGB}{77,175,74}    % Green
+%\definecolor{color5}{RGB}{152,78,163}   % Purple
+%\definecolor{color6}{RGB}{255,255,51}   % Yellow
+%\definecolor{color01}{RGB}{255,255,255} % White
+%\definecolor{color02}{RGB}{0,0,0}       % Black
+%\definecolor{color03}{RGB}{125,125,125} % Gray
+%	RGB Grayscale:
+%	video black (0% gray) = RGB 16,16,16
+%	10% gray = RGB 38,38,38
+%	20% gray = RGB 59,59,59
+%	30% gray = RGB 81,81,81
+%	40% gray = RGB 103,103,103
+%	50% gray = RGB 125,125,125
+%	60% gray = RGB 147,147,147
+%	70% gray = RGB 168,168,168
+%	80% gray = RGB 191,191,191
+%	90% gray = RGB 212,212,212
+%	100% gray = RGB 235,235,235
+%===================================================
+
+
+%==== Plot Styles  =================================
+
+\pgfplotsset
+{
+	axisStyleA/.style=
+	{
+		axis line style =
+		{
+			very thick,
+			shorten <=-0.5\pgflinewidth,
+			Black!55
+		},
+		ylabel near ticks,
+		label style=
+		{
+			font=\inplottext
+		},
+		unit marking pre={\inplottextsize\lbrack}, %\inplottext \mathrm{in}},
+		unit marking post={\inplottextsize\rbrack},
+		ticklabel style=
+		{
+			color=Black!55,
+			%font=\ssfamily % % Think about sans serif font for ticklabels!
+			font=\inplottextsize % don't use non-math font for numbers
+		},
+		tick style=
+		{
+			thick
+		},
+		axis lines*=left,
+		y tick scale label style={xshift=-1em}
+	},
+	axisStyleC/.style=
+	{
+		axis line style =
+		{
+			very thick,
+			shorten <=-0.5\pgflinewidth,
+			Black!55
+		},
+		ylabel near ticks,
+		label style=
+		{
+			font=\inplottext
+		},
+		unit marking pre={\inplottext \mathrm{in}},
+		unit marking post={},
+		ticklabel style=
+		{
+			color=Black!55,
+			%font=\ssfamily % % Think about sans serif font for ticklabels!
+			font=\inplottextsize % don't use non-math font for numbers
+		},
+%		tick style=
+%		{
+%			thick
+%		},
+		axis lines*=left
+	}
+}
+
+%xlabela/.style={Test test 123},
+
+%===================================================
+
+
+%==== Legend Styles ================================
+\pgfplotsset
+{
+	legendStyleOutside/.style=
+	{
+		legend style=
+		{
+			font=\inplottext,
+			draw=white,
+			at={(xlabel.south)},
+			yshift=-1ex,
+			anchor=north,
+			legend columns=4,
+			/tikz/every even column/.style={column sep=8pt},
+		}
+	},
+	legendStyleOutsideNarrow/.style=
+	{
+		legend style=
+		{
+			font=\inplottext,
+			draw=white,
+			at={(xlabel.south)},
+			yshift=-1ex,
+			anchor=north,
+			legend columns=2,
+			/tikz/every even column/.style={column sep=0.2cm}
+		}
+	},
+	legendStyleInside/.style=
+	{
+		legend style=
+		{
+			font=\inplottext,
+			draw=gray,
+			thick,
+			at={(0.5,1.0)},
+			anchor=north,
+			legend columns=2,
+			/tikz/every even column/.style={column sep=0.2cm},
+		}
+	}
+}
+%===================================================
+
+
+
+%==== Line Styles ==================================
+\pgfplotsset
+{
+	lpPlotStyle/.style=
+	{
+		line width=0.8,
+		mark=*,
+		mark size=0.6
+	},
+	lPlotStyle/.style=
+	{
+		line width=0.8,
+		mark size=0.0
+	},
+	pPlotStyle/.style=
+	{
+		only marks,
+		mark=*,
+		mark size=0.6
+	}
+}
+%===================================================
+
+
+%==== Pin Styles ===================================
+\tikzset
+{
+	blackpin/.style=
+	{
+		color=Black,
+		pin distance = 1.8mm,
+		pin edge={Black,thick},
+		font=\inplottext,
+		inner sep=\TikzScaling*2.5pt,
+		outer sep=0pt %-\TikzScaling*1.3pt
+	}
+}
+%===================================================
+
+
+%==== Color Maps =======================================
+%\pgfplotsset
+%{
+%	colormap={colormapone}
+%	{
+%%	[5pt]
+%		color(0pt)=(blue);
+%%		rgb255(500pt)=(255, 75, 0);
+%%		rgb255(500pt)=(0, 100, 255);
+%		color(1000pt)=(orange)
+%	},
+%}
+\pgfplotsset{
+	colormap={colormap1}{
+		color(0cm)=(color5!80!White);
+		color(1cm)=(color1!80!White)
+	},
+	colormap={colormap2}{
+		color(0cm)=(Purple!80);
+		color(1cm)=(Cyan!80)
+	},
+	colormap={colormap3}{
+		color(0cm)=(Blue);
+		color(0.25cm)=(Blue!75!Green);
+		color(0.5cm)=(Green);
+		color(0.75cm)=(Green!25!Red);
+		color(1cm)=(Red)
+	},
+	colormap={colormap4}{
+		color(0cm)=(Cyan!80!blue);
+		color(0.25cm)=(Cyan!30!Blue);
+		color(0.5cm)=(Blue);
+		color(0.75cm)=(Blue!70!Magenta);
+		color(1cm)=(Magenta!80!Blue);
+	},
+	colormap={colormap5}{
+		color(0cm)=(Cyan);
+		color(0.25cm)=(Cyan!50!Blue);
+		color(0.5cm)=(Blue!90!White);
+		color(0.75cm)=(Blue!60!Magenta);
+		color(1cm)=(Magenta!90!Blue);
+	}
+}
+%===================================================
+
+
+
+%==== Grid Styles ==================================
+\pgfplotsset{every grid/.append style={dashed,Gray}}
+\pgfplotsset{every minor grid/.append style={dashed,Red}}
+\pgfplotsset{every major grid/.append style={dotted,Green!50!Black}}
+%===================================================
+
+
+%==== Sphere Shading =====================================
+% Declare nice sphere shading: http://tex.stackexchange.com/a/54239/12440
+%\pgfdeclareradialshading[tikz@ball]{ball}{\pgfqpoint{0bp}{0bp}}{%
+% (0bp)=(tikz@ball!0!white);
+% color(7bp)=(tikz@ball!0!white);
+% color(15bp)=(tikz@ball!70!black);
+% color(20bp)=(black!70);
+% color(30bp)=(black!70)}
+%\makeatother
+%===================================================
+
+
+%==== Z Buffer Stuff ======================================
+% Styles to plot only points that are before or behind the sphere.
+\pgfplotsset{only foreground/.style={
+    restrict expr to domain={rawx*\CameraX + rawy*\CameraY + rawz*\CameraZ}{-0.05:100},
+}}
+\pgfplotsset{only background/.style={
+    restrict expr to domain={rawx*\CameraX + rawy*\CameraY + rawz*\CameraZ}{-100:0.05}
+}}
+
+% Automatically plot transparent lines in background and solid lines in foreground
+\def\addFGBGplot[#1]#2;{
+    \addplot3[#1,only background, opacity=0.25] #2;
+    \addplot3[#1,only foreground] #2;
+}
+%===================================================
+
+
+
+
+
+%==== better Zigzag Spring decoration
+%== see http://tex.stackexchange.com/questions/33162/tikz-decoration-with-1cm-zigzag-in-the-middle-of-a-link
+\pgfdeclaremetadecoration{middlezigzag}{straight}{
+    \state{straight}[switch if less than=\pgfmetadecorationsegmentlength to final,
+                  width=\pgfmetadecoratedpathlength/2 - \pgfmetadecorationsegmentlength/2 ,
+                  next state=zigzag] {
+        \decoration{curveto}
+    }
+    \state{zigzag}[width=\pgfmetadecorationsegmentlength,
+                   next state=final] {
+        \decoration{zigzag}
+    }
+    \state{final}{
+        \decoration{curveto}
+        \beforedecoration{\pgfpathmoveto{\pgfpointmetadecoratedpathfirst}}
+    }
+}
+%=================================

@@ -1,0 +1,38 @@
+
+\chapter{Results}
+\label{Chapter:Results}
+
+
+
+We could have some example data:
+%
+\begin{table}[htb]
+	\pgfplotstabletypeset
+		[
+			header=false,
+			display column names={a,$\sigma$,$p_x$,$p_y$,$p_z$},
+			every head row/.style={before row=\toprule, after row=\midrule},
+			every last row/.style={after row=\bottomrule}
+		]
+		{\datafolder/example/example_table.txt}
+	\mycaption[Parameters of some sort maybe]
+		{some text... \lipsum[20]}
+\label{Table: example}
+\end{table}
+%
+\lipsum[30]
+%
+
+
+Which leads us to the following tikz figure:
+%
+\begin{figure}[H]
+	\useexternalfile[\tikzfolder]{example}
+	\mycaption[some example data]
+	{
+		caption text... \lipsum[21]
+	}
+	\label{Fig: example}
+\end{figure}
+%
+\lipsum[31]

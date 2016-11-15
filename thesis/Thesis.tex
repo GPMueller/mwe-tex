@@ -1,0 +1,111 @@
+\documentclass
+[
+	twoside,
+	openright,
+	titlepage,
+	numbers=noenddot,
+	headinclude,%1headlines,% letterpaper a4paper
+	footinclude=true,
+	cleardoublepage=empty,
+	BCOR=5mm,
+	11pt,
+	a4paper
+]{scrreprt} %  KOMA-Script article scrartcl
+
+%==== For filler text
+\usepackage{lipsum}
+
+%==== Relative Path to the Main Tex
+\providecommand{\maintex}{.}
+
+%==== Text Size inside Plots
+\newcommand{\inplottextsize}{\scriptsize}
+\newcommand{\inplottext}{\inplottextsize\fontfamily{cmss}\selectfont}
+
+%==== Header with Global Settings
+\input{\maintex/Header}
+
+%==== Tikz Figure Scaling
+\newcommand{\TikzScaling}{0.7}
+
+%==== ToDo Items, Ideas, missing references
+\newcommand{\todo}[1]{\textcolor{Red}{[\textbf{ToDo}: {#1}]}}
+\newcommand{\idea}[1]{\textcolor{RoyalBlue}{[\textbf{Idea}: {#1}]}}
+\newcommand{\refthis}[1][]{%
+	 \ifthenelse{\equal{#1}{}}{\textcolor{Red}{[REF]}}{\textcolor{Red}{[REF {#1}]}}%
+}
+
+
+
+
+\begin{document}
+	
+	%********************************************************************
+	% Frontmatter
+	%*******************************************************
+	\frenchspacing
+	\raggedbottom
+%	\renewcommand*{\bibname}{testname}
+%	\setbibpreamble{}
+	\pagenumbering{roman}
+	\pagestyle{plain}
+	
+	\include{FrontBack/Titlepage}
+	\include{FrontBack/Titleback}
+%	\cleardoublepage\include{FrontBack/Dedication}
+	\cleardoublepage\include{FrontBack/Foreword}
+%	\cleardoublepage\include{FrontBack/Abstract}
+%	\cleardoublepage\include{FrontBack/Publication}
+	\cleardoublepage\include{FrontBack/Acknowledgements}
+	
+	\cleardoublepage\include{FrontBack/Contents}
+	
+	\pagestyle{scrheadings} % Move this in front of Contents if one of the "chapter"s goes over several pages
+	
+	%********************************************************************
+	% Mainmatter
+	%*******************************************************
+	
+	\pagenumbering{arabic}
+	\cleardoublepage
+	
+	\subfilewithtikz{Introduction}
+	
+	\subfilewithtikz{Chapter1}
+	
+	\subfilewithtikz{Chapter2}
+	
+	\subfilewithtikz{Chapter3}
+	
+	\subfilewithtikz{Chapter4}
+	
+	\subfilewithtikz{Conclusion}
+	
+	\subfilewithtikz{Appendix}
+
+
+
+% ********************************************************************
+% Backmatter
+%*******************************************************
+%\appendix
+%\cleardoublepage
+%\part{Appendix}
+%\include{Chapters/Chapter0A}
+
+
+%********************************************************************
+% Other Stuff in the Back
+%*******************************************************
+\cleardoublepage\include{FrontBack/Bibliography}
+%\cleardoublepage\include{FrontBackmatter/Colophon}
+\cleardoublepage\include{FrontBack/Declaration}
+% ********************************************************************
+
+%    % bib stuff
+%    \nocite{*}
+%    \addtocontents{toc}{\protect\vspace{\beforebibskip}}
+%    \addcontentsline{toc}{section}{\refname}    
+%    \bibliographystyle{plain}
+%    \bibliography{../Bibliography}
+\end{document}

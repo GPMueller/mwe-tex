@@ -1,0 +1,91 @@
+\documentclass
+[
+	twoside,
+	openright,
+	titlepage,
+	numbers=noenddot,
+	headinclude,%1headlines,% letterpaper a4paper
+	footinclude=true,
+	cleardoublepage=empty,
+	BCOR=5mm,
+	11pt,
+	a4paper
+]{scrreprt} % KOMA-Script article scrartcl
+
+%==== Relative Path to the Main Tex
+\providecommand{\maintex}{.}
+
+%==== Header with Global Settings
+\input{\maintex/Header}
+
+\tikzexternaldisable
+\author{Maximilian Karl Mustermann}
+\title{%
+%    \textcolor{RoyalBlue}{\myTitle}
+    \spacedlowsmallcaps{\myTitle} \vspace{1em}\\
+\spacedallcaps{\mySubtitle}}
+
+% This part depends on your actual environment, Here I am using KOMA script
+\makeatletter
+\renewcommand{\maketitle}{%
+    \begin{tikzpicture}[remember picture, overlay]
+	%	\node (bottom2) at (current page.south)
+	%	              [rectangle, fill=black!25!white, inner sep=0 pt, anchor=south,
+	%	               minimum width=1\paperwidth, minimum height=0.7cm]{};
+%	\node at (current page.north)
+%		[rectangle,fill=black!20!white,inner sep=0pt, anchor=north,minimum width=\paperwidth,minimum height=0.25\paperheight,yshift=-0.25\paperheight] {};
+%		\node (left2) at (current page.west)
+%		              [rectangle, %fill=black!65!white, 
+%		              fill=black!35!white,
+%		              inner sep=0pt, anchor = west,
+%		               minimum width=4.2cm, minimum height=1\paperheight]{};
+        % Gray boundary
+        \node (left) at (current page.west)
+              [rectangle, fill=Gray, inner sep=0pt, anchor = west,
+               minimum width=4cm, minimum height=1\paperheight]{};
+        % Red boundary
+        \node (bottom) at (current page.south)
+              [rectangle, fill=Gray!60!Black, inner sep=0 pt, anchor=south,
+               minimum width=1\paperwidth, minimum height=0.5cm]{};
+
+%		\node [yshift=\paperheight/3,xshift=1em] (middle) at (current page.south) {\sphericalFuncPlot{1/4*sqrt(15/pi)*sin(\tdplottheta)*sin(\tdplottheta)*sin(2*\tdplotphi)}{1}};%{\includegraphics[scale=0.3]{Chapters/Chapter02/TrimerSchematic.pdf}};
+		
+
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        %%%%%%%%%%%% PUT YOUR TITLEPAGE IMAGE HERE %%%%%%%%%%%%
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		% \node [yshift=\paperheight/3,xshift=3em] (middle) at (current page.south) {\includegraphics[scale=0.13]{FrontBack/Coverimage.pdf}};
+
+		\node (right) at (current page.east) [rectangle, fill=Gray, inner sep=0 pt, anchor=east,
+					minimum width={1\paperwidth-5.5cm},minimum height={0.07cm},yshift=0.205\paperheight]{};
+        % Some additional stuff:
+%        \node [yshift=\paperheight/3] (middle) at (current page.south)
+%              [rectangle, fill=Green, inner sep=0pt, anchor=north west,
+%               minimum height=3cm, minimum width=0.25\paperwidth]{};
+%        \node [yshift=\paperheight/3] (middle) at (current page.south)
+%              [rectangle, fill=BrickRed, inner sep=0pt, anchor=north east,
+%               minimum height=3cm, minimum width=0.25\paperwidth]{};
+%        \node [yshift=\paperheight/3] (middle) at (current page.south)
+%              [rectangle, fill=Goldenrod, inner sep=0pt, anchor=south west,
+%               minimum height=3cm, minimum width=0.25\paperwidth]{};
+%        \node [yshift=\paperheight/3] (middle) at (current page.south)
+%              [rectangle, fill=RoyalBlue, inner sep=0pt, anchor=south east,
+%               minimum height=3cm, minimum width=0.25\paperwidth]{};
+    \end{tikzpicture}
+    \thispagestyle{empty}
+    \parindent0pt
+
+    \begin{addmargin}[5em]{3em}
+        \vspace{4cm}
+%        {\huge\usekomafont{title} \@title\par}
+        {\huge \@title\par}
+
+        \vspace{2cm}
+        {\Large \spacedlowsmallcaps{\@author}}\par
+    \end{addmargin}
+}
+\makeatother
+
+\begin{document}
+\maketitle
+\end{document}

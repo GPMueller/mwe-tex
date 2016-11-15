@@ -1,0 +1,45 @@
+
+{
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% set section header
+\renewcommand{\thesection}{\Alph{section}}
+\titleformat{\section}
+     {\relax\vspace*{\baselineskip}}{{\textsc{\MakeTextLowercase{\huge\Alph{section}}}}}{1em}{\spacedallcaps{#1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+     
+\chapter*{Appendix}
+\label{Chapter:Appendix}
+\addcontentsline{toc}{chapter}{\tocEntry{Appendix}}
+%	\pdfbookmark[1]{Appendix}{appendix}
+\markboth{\spacedlowsmallcaps{Appendix}}{\spacedlowsmallcaps{\thesection}}
+\appendix
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% set counters
+\renewcommand{\thefigure}{\thesection.\arabic{figure}}
+\renewcommand{\thetable}{\thesection.\arabic{table}}
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\hypertarget{Appendix:A}{}
+\section{An Appendix Section}
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\setcounter{equation}{0}
+\label{Section:Appendix_A}
+
+
+	\lipsum[1]
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% reset counters
+\renewcommand{\thefigure}{\thechapter.\arabic{figure}}
+\renewcommand{\thetable}{\thechapter.\arabic{table}}
+\renewcommand{\theequation}{\thechapter.\arabic{equation}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+}

@@ -1,0 +1,195 @@
+
+%==== General Stuff ================================
+\usepackage{tikz,pgfplots,pgfplotstable,pgffor,pgfmath,tikz-3dplot}
+%\usepgfplotslibrary{external}
+%\usepackage{underscore} % to read in tables with underscores in head
+%\usepackage{etoolbox} % for patching underscores in tikz tables
+
+%\usepackage[margin=15mm]{geometry}
+
+\usetikzlibrary{positioning,plotmarks,pgfplots.colormaps,external,3d,calc,arrows}
+\usetikzlibrary{decorations,decorations.pathmorphing,decorations.pathreplacing}
+\usetikzlibrary{shapes,arrows}
+\tikzexternalize[prefix=output/,mode=convert with system call,shell escape=-enable-write18]
+%\tikzsetexternalprefix{\maintex/PBC/output/}
+
+\usepgfplotslibrary{units}
+\usepgfplotslibrary{groupplots}
+%===================================================
+
+
+%==== PGF table column names key ============================
+% see also http://tex.stackexchange.com/a/156428/70901
+
+% taken from one comment of Villemoes in
+% http://tex.stackexchange.com/a/15263/3061
+\def\pgfglobalkeys#1{\begingroup \ifnum\the\globaldefs>0\relax \else \globaldefs=1\fi \pgfkeys{#1}\endgroup}
+
+% define the new key
+\pgfplotstableset{display column names/.code={
+        \foreach[count=\n from 0] \x in {#1} {
+            \pgfglobalkeys{/pgfplots/table/display columns/\n/.estyle={column name=\x}}
+        }
+    }
+}
+%===================================================
+
+
+%==== Tikz & PGF Camera alignment macro ========================
+% Style to set TikZ camera angle, like PGFPlots `view`
+\tikzset{viewport/.style 2 args={
+    x={({cos(-#1)*1cm},{sin(-#1)*sin(#2)*1cm})},
+    y={({-sin(-#1)*1cm},{cos(-#1)*sin(#2)*1cm})},
+    z={(0,{cos(#2)*1cm})}
+}}
+%===================================================
+
+%==== Arrows ===================================
+\tikzset
+{
+	%Define standard arrow tip
+	>=stealth',
+}
+%    %Define style for boxes
+%    punkt/.style={
+%           rectangle,
+%           rounded corners,
+%           draw=black, very thick,
+%           text width=6.5em,
+%           minimum height=2em,
+%           text centered},
+%    % Define arrow style
+%    pil/.style={
+%           ->,
+%           thick,
+%           shorten <=2pt,
+%           shorten >=2pt,}
+%}
+%============================================
+
+
+%==== Externalisation ==============================
+\makeatletter
+\newcommand{\useexternalfile}[2][Tikz] % \useexternalfile[Folder]{Filename}
+{
+	\tikzsetnextfilename{#2-output}
+%	\begingroup
+%		\tikzset{every picture/.append style={scale=#1}}%
+%		\input{\tikzexternal@filenameprefix#2.tikz}	
+%	\endgroup
+	\input{#1/#2.tikz}
+}
+%\newcommand{\useexternalfile}[1]
+%{
+%	\tikzsetnextfilename{#1-output}
+%	%\input{\tikzexternal@filenameprefix#1.tikz}
+%	\input{#1.tikz}
+%}
+\makeatother
+%===================================================
+
+
+
+
+%==== Nodes Near Some Coords =======================
+\pgfplotsset{
+    node near coord/.style args={#1/#2/#3}{% Style for activating the label for a single coordinate
+        nodes near coords*={
+            \ifnum\coordindex=#1 #2\fi
+        },
+        scatter/@pre marker code/.append code={
+            \ifnum\coordindex=#1 \pgfplotsset{every node near coord/.append style=#3}\fi
+        }
+    },
+    nodes near some coords/.style={ % Style for activating the label for a list of coordinates
+        scatter/@pre marker code/.code={},% Reset the default scatter style, so we don't get coloured markers
+        scatter/@post marker code/.code={},% 
+        node near coord/.list={#1} % Run "node near coord" once for every element in the list
+    }
+}
+%==== Pins Near Some Coords ========================
+\pgfplotsset{
+    pin near coord/.style args={#1/#2}{% Style for activating the label for a single coordinate
+        scatter/@pre marker code/.append code={
+            \ifnum\coordindex=#1 \node[pin=#2]{};\fi
+        }
+    },
+    pins near some coords/.style={ % Style for activating the label for a list of coordinates
+        scatter,
+        scatter/@pre marker code/.code={},% Reset the default scatter style, so we don't get coloured markers
+        scatter/@post marker code/.code={},% 
+        pin near coord/.list={#1} % Run "pin near coord" once for every element in the list
+    }
+}
+%===================================================
+
+
+
+%==== Select lines or columns from Datafile ========
+\pgfplotsset
+{
+	select coords between index/.style 2 args=
+	{
+		x filter/.code=
+		{
+			\ifnum\coordindex<#1\def\pgfmathresult{}\fi
+			\ifnum\coordindex>#2\def\pgfmathresult{}\fi
+		}
+	}
+}
+
+\pgfplotsset{
+	discard if not/.style 2 args={
+		x filter/.code={
+			\edef\tempa{\thisrow{#1}}
+			\edef\tempb{#2}
+			\ifx\tempa\tempb
+			\else
+			\def\pgfmathresult{inf}
+			\fi
+		}
+	}
+}
+%===================================================
+
+
+%==== Harpoons for vectors
+% See   http://tex.stackexchange.com/questions/66723/nudging-overset-characters-downwards
+%  and http://tex.stackexchange.com/questions/23411/tikzpicture-in-node-of-another-tikzpicture-how-to-screen-of-from-inheriting-sty
+% Just for fun, a tikz solution
+\renewcommand{\vec}[1]{
+	\tikzset{external/export next=false}
+	\tikz[baseline=(X.base),inner sep=0pt,outer sep=0pt] {
+		\node[inner sep=0pt,outer sep=0pt] (X) {$#1$};
+		\node[anchor=center,yshift=1.5pt,xshift=0.4pt] at (X.north) {$\scriptscriptstyle\rightharpoonup$};
+	}
+}
+%===================
+
+
+
+%%==== Fix Underscores in table read ================
+%\makeatletter
+%% Patch the command that precedes reading the table
+%\patchcmd{\pgfplotstablereadpreparecatcodes@}
+%  {\pgfplotstableinstallignorechars}
+%  {\catcode`\_=13 \begingroup\lccode`~=`_ 
+%   \lowercase{\endgroup\let~}\textunderscore
+%   \pgfplotstableinstallignorechars}
+%  {}{}
+%% Patch the command that restores the category codes
+%\patchcmd{\pgfplotstablereadpreparecatcodes}
+%  {\noexpand}
+%  {\catcode\string`\noexpand\_=\the\catcode\string`\_ \noexpand}
+%  {}{}
+%\makeatother
+%
+%%% For your convenience: This is the unaltered macro that prints
+%%% the tick label when "xticklabels from table" is used
+%\makeatletter
+%\def\pgfplots@user@ticklabel@list@x{%
+%    \pgfplotslistselectorempty\ticknum\of\pgfplots@xticklabels\to\tick
+%    \tick
+%}
+%\makeatother
+%%===================================================
