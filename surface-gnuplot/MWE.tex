@@ -1,0 +1,89 @@
+\documentclass{report}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\usepackage[dvipsnames]{xcolor}
+
+\usepackage{tikz,pgfplots,tikz-3dplot}
+
+%===================================================
+\usetikzlibrary{pgfplots.colormaps,external,3d}
+\tikzexternalize[mode=convert with system call,shell escape=-enable-write18]
+%===================================================
+
+
+%==== Tikz & PGF Camera alignment macro ============
+% Style to set TikZ camera angle, like PGFPlots `view`
+\tikzset{viewport/.style 2 args={
+		x={({cos(-#1)*1cm},{sin(-#1)*sin(#2)*1cm})},
+		y={({-sin(-#1)*1cm},{cos(-#1)*sin(#2)*1cm})},
+		z={(0,{cos(#2)*1cm})}
+}}
+%===================================================
+
+% Color Map
+\pgfplotsset{
+	colormap={colormap2}{
+		color(0cm)=(blue!70!black);
+		color(1cm)=(cyan!60!black)
+	}
+}
+
+%==== Externalisation ==============================
+\makeatletter
+\newcommand{\useexternalfile}[2][Tikz] % \useexternalfile[Folder]{Filename}
+{
+	\tikzsetnextfilename{#2-output}
+	\input{#1/#2.tikz}
+}
+\makeatother
+%===================================================
+
+\begin{document}
+	
+	
+	
+	
+	\begin{tikzpicture}
+	
+	%==================================
+	%==== 3D Surface Plot =============
+	\begin{axis}
+	[
+		view={25}{70},
+		scale only axis,
+		colormap name={colormap2},
+		ticks=none,
+		width=0.3\textwidth,
+		at={(-0.3\textwidth,0)}
+	]
+	
+	\addplot3
+	[
+		raw gnuplot,
+		surf,
+		%			contour prepared,
+		%			contour/labels=false,
+		samples=20,
+	]
+	gnuplot
+	{%
+		f(x,y) = (atan(sqrt(x**2 + y**2)))**2;
+		fun(x,y) = 1.2*f((x+2)/2,(y-2)/2) + f((x-2)/2,(y+2)/2) - 0.5*(f((x+4)/2,(y+4)/1.5)) - 0.6*(f((x-4)/3,(y-4)/2)) - 0.75*(f((x+0.25)/1.25,y/1.25)) - 0.025*x;
+		set samples 50, 50;
+		set isosamples 51, 51;
+		%			set contour base;
+		%			set cntrparam levels 15;
+		set xrange [-1.0*pi:1.0*pi];
+		set yrange [-1.0*pi:1.0*pi];
+		splot fun(x,y);
+	};
+	
+    \end{axis}
+    %==================================
+    %==================================
+
+	\end{tikzpicture}
+	
+\end{document}

@@ -166,6 +166,7 @@ pythontex-files-*/
 *.dep
 *.md5
 *.auxlock
+*.pgf-plot.*
 
 # todonotes
 *.tdo
