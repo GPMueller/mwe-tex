@@ -1,0 +1,233 @@
+\documentclass{report}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\usepackage[dvipsnames]{xcolor}
+
+\usepackage{tikz,pgfplots,pgfplotstable}
+\pgfplotsset{compat=newest}
+
+%===================================================
+\usetikzlibrary{positioning,plotmarks,external}
+\tikzexternalize[mode=convert with system call,shell escape=-enable-write18]
+%===================================================
+
+%==== Externalisation ==============================
+\makeatletter
+\newcommand{\useexternalfile}[2][Tikz] % \useexternalfile[Folder]{Filename}
+{
+	\tikzsetnextfilename{#2-output}
+	\input{#1/#2.tikz}
+}
+\makeatother
+%===================================================
+
+%==== Line Colors CMYK ==============================
+%\definecolor{color1}{cmyk}{0.784,0.506,0,0}      % Blue
+\colorlet{color1}{RoyalBlue}
+\definecolor{color2}{cmyk}{0,0.886,0.877,0.106}  % Red
+\definecolor{color3}{cmyk}{0,0.502,1,0}          % Orange
+\definecolor{color4}{cmyk}{0.56,0,0.577,0.314}   % Green
+%\definecolor{color5}{cmyk}{0.0675,0.521,0,0.361} % Purple
+\definecolor{color5}{cmyk}{0.62,0.79,0,0} % Purple
+\definecolor{color6}{cmyk}{0,0,0.8,0}            % Yellow
+\definecolor{color01}{cmyk}{0,0,0,0}             % White
+\definecolor{color02}{cmyk}{0,0,0,1}             % Black
+\definecolor{color03}{cmyk}{0,0,0,0.55}          % Gray
+%\definecolor{pureblue}{cmyk}{1,1,0,0}
+%\definecolor{puregreen}{cmyk}{1,0,1,0}
+%\definecolor{purered}{cmyk}{0,1,1,0}
+%===================================================
+	
+	
+	
+%==== Plot Styles  =================================
+\pgfplotsset
+{
+    lpPlotStyle/.style=
+	{
+		line width=0.8,
+		mark=*,
+		mark size=0.6
+	},
+	lPlotStyle/.style=
+	{
+		line width=0.8,
+		mark size=0.0
+	},
+	pPlotStyle/.style=
+	{
+		only marks,
+		mark=*,
+		mark size=0.6
+	},
+    axisStyleA/.style=
+    {
+        axis line style =
+        {
+            very thick,
+            shorten <=-0.5\pgflinewidth,
+            Black!55
+        },
+        ylabel near ticks,
+        label style=
+        {
+            font=\small%\inplottext
+        },
+%			unit marking pre={\inplottextsize\lbrack}, %\inplottext \mathrm{in}},
+%			unit marking post={\inplottextsize\rbrack},
+        ticklabel style=
+        {
+            color=Black!55,
+            %font=\ssfamily % % Think about sans serif font for ticklabels!
+            font=\small%\inplottextsize % don't use non-math font for numbers
+        },
+        tick style=
+        {
+            thick
+        },
+        axis lines=left,
+        y tick scale label style={xshift=-1em}
+    }
+}
+%===================================================
+	
+%==== fix the axis being below the plot lines ======
+%	\pgfplotsset
+%	{
+%		axis line on top/.style=
+%		{
+%			axis line style=transparent,
+%			ticklabel style=transparent,
+%			tick style=transparent,
+%			axis on top=false,
+%			after end axis/.append code=
+%			{
+%				\pgfplotsset
+%				{
+%					axis line style=opaque,
+%					ticklabel style=opaque,
+%					tick style=opaque,
+%					grid=none,
+%					every extra x tick/.style={grid=none},
+%					every extra y tick/.style={grid=none}},
+%					\pgfplotsdrawaxis
+%				}
+%			}
+%		}
+%	}
+%===================================
+	
+	
+	
+	
+\begin{document}
+	
+		
+    \begin{tikzpicture}
+    [
+    %scale=0.7
+    ]
+    %==== Plot Sizes
+    \newcommand{\plotwidth}{\linewidth*0.7}
+    \newcommand{\plotheight}{3.0/5.0*\plotwidth}
+
+    % % % ONE
+    %==== Data: Tables
+    \pgfplotstableread{data/example_1_1.txt}\datatableOne
+    %==== Rx last value of datatable
+    \pgfplotstablegetrowsof{data/example_1_1.txt}
+    \pgfmathsetmacro{\nLinesOne}{\pgfplotsretval-1}
+    \pgfplotstablegetelem{\nLinesOne}{Rx}\of{\datatableOne}
+    \pgfmathsetmacro{\RxtotOne}{\pgfplotsretval}
+
+    % % % TWO
+    %==== Data: Tables
+    \pgfplotstableread{data/example_1_2.txt}\datatableTwo
+    %==== Rx last value of datatable
+    \pgfplotstablegetrowsof{data/example_1_2.txt}
+    \pgfmathsetmacro{\nLinesTwo}{\pgfplotsretval-1}
+    \pgfplotstablegetelem{\nLinesTwo}{Rx}\of{\datatableTwo}
+    \pgfmathsetmacro{\RxtotTwo}{\pgfplotsretval}
+
+    % % % THREE
+    %==== Data: Tables
+    \pgfplotstableread{data/example_1_3.txt}\datatableThree
+    %==== Rx last value of datatable
+    \pgfplotstablegetrowsof{data/example_1_3.txt}
+    \pgfmathsetmacro{\nLinesThree}{\pgfplotsretval-1}
+    \pgfplotstablegetelem{\nLinesThree}{Rx}\of{\datatableThree}
+    \pgfmathsetmacro{\RxtotThree}{\pgfplotsretval}
+
+
+    % % % FOUR
+    %==== Data: Tables
+    \pgfplotstableread{data/example_1_4.txt}\datatableFour
+    %==== Rx last value of datatable
+    \pgfplotstablegetrowsof{data/example_1_4.txt}
+    \pgfmathsetmacro{\nLinesFour}{\pgfplotsretval-1}
+    \pgfplotstablegetelem{\nLinesFour}{Rx}\of{\datatableFour}
+    \pgfmathsetmacro{\RxtotFour}{\pgfplotsretval}
+
+
+    \begin{axis}
+    [
+        axisStyleA,
+        %		legendStyleInside,
+        xlabel=$x$,
+        xlabel style={name=xlabel},
+        % x unit={\siunit{s}},
+        ylabel=$y$,
+        % y unit={\siunit{m}},
+        %		ymax=-22.74,
+        scale only axis,
+        width=\plotwidth,
+        height=\plotheight,
+        %		at={(\plotwidth*1.0/5.0,0)},
+        %		legend entries={one,other},
+        legend pos= north west
+    ]
+    % % % ONE
+    \addplot
+    [
+        lpPlotStyle,
+        color=color1,
+        %			smooth,
+        %			mark=none
+    ] table [x expr=\thisrow{Rx}/\RxtotOne, y expr=\thisrow{Ry}] {\datatableOne};
+    \addlegendentry{\small Test 1};
+
+    % % % TWO
+    \addplot
+    [
+        lpPlotStyle,
+        color=color2,
+    ] table [x expr=\thisrow{Rx}/\RxtotTwo, y expr=\thisrow{Ry}] {\datatableTwo};
+    \addlegendentry{\small Test 2};
+
+
+    % % % THREE
+    \addplot
+    [
+        lpPlotStyle,
+        color=color3,
+    ] table [x expr=\thisrow{Rx}/\RxtotThree, y expr=\thisrow{Ry}] {\datatableThree};
+    \addlegendentry{\small Test 3};
+
+
+    % % % FOUR
+    \addplot
+    [
+        lpPlotStyle,
+        color=color4,
+    ] table [x expr=\thisrow{Rx}/\RxtotFour, y expr=\thisrow{Ry}] {\datatableFour};
+    \addlegendentry{\small Test 4};
+
+    \end{axis}
+
+
+
+    \end{tikzpicture}
+	
+\end{document}
